@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://chat-app-backend-w9hd.vercel.app";
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSignIngUp: false,
@@ -11,6 +11,7 @@ export const useAuthStore = create((set, get) => ({
   isCheckingAuth: true,
   onlineUsers: [],
   socket: null,
+  token: null,
   checkAuth: async () => {
     try {
       const response = await axiosInstance.get("/auth/check");
@@ -27,6 +28,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/signup", data);
       set({ authUser: res.data });
+      set({ token: res.data.token });
       toast.success("Account created successfully");
       get().connectSocket();
     } catch (error) {
@@ -40,6 +42,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/login", data);
       set({ authUser: res.data });
+      set({ token: res.data.token });
       toast.success(res.data.message || "Logged in successfully");
       get().connectSocket();
     } catch (error) {
@@ -52,6 +55,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/logout");
       set({ authUser: null });
+      set({ token: null });
       toast.success(res.data.message || "Logged out successfully");
       get().disConnectSocket();
     } catch (error) {
