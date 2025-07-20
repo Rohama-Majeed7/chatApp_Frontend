@@ -1,6 +1,6 @@
 // src/pages/ForgotPassword.jsx
 import React, { useState } from "react";
-import { axiosInstance } from "../lib/AxiosComp";
+import  axiosInstance  from "../lib/AxiosComp";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
