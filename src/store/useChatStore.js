@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import  axiosInstance  from "../lib//AxiosComp";
+import  {axiosInstance } from "../lib/axios";
 // import { use } from "react";
 import { useAuthStore } from "./useAuthStore";
 import toast from "react-hot-toast";
@@ -13,7 +13,11 @@ export const useChatStore = create((set, get) => ({
   getUsers: async () => {
     set({ isUserLoading: true });
     try {
-      const response = await axiosInstance.get("/messages/users");
+      const response = await axiosInstance.get("/messages/users",{
+         headers: {
+          Authorization: `Bearer ${useAuthStore.getState().token}`, // <- replace with your actual token
+        },
+      });
       set({ users: response.data.users, isUserLoading: false });
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -23,7 +27,11 @@ export const useChatStore = create((set, get) => ({
   getMessages: async (userId) => {
     set({ isMessagesLoading: true });
     try {
-      const response = await axiosInstance.get(`/messages/${userId}`);
+      const response = await axiosInstance.get(`/messages/${userId}`,{
+         headers: {
+          Authorization: `Bearer ${useAuthStore.getState().token}`, // <- replace with your actual token
+        },
+      });
       console.log("Fetched messages:", response.data.messages);
       set({ messages: response.data.messages, isMessagesLoading: false });
     } catch (error) {
@@ -36,7 +44,11 @@ export const useChatStore = create((set, get) => ({
       const { selectedUser, messages, value } = get();
       const response = await axiosInstance.post(
         `/messages/send/${selectedUser._id}`,
-        messageData
+        messageData,{
+           headers: {
+          Authorization: `Bearer ${useAuthStore.getState().token}`, // <- replace with your actual token
+        },
+        }
       );
       set({ value: value + 1 });
       set({
@@ -50,7 +62,11 @@ export const useChatStore = create((set, get) => ({
     const { value } = useAuthStore.getState();
     try {
       const response = await axiosInstance.delete(
-        `/messages/deleteMessageFromEveryOne/${messageId}`
+        `/messages/deleteMessageFromEveryOne/${messageId}`,{
+           headers: {
+          Authorization: `Bearer ${useAuthStore.getState().token}`, // <- replace with your actual token
+        },
+        }
       );
       if (response.data.success) {
         set((state) => ({

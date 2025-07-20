@@ -1,6 +1,6 @@
 // src/pages/ForgotPassword.jsx
 import React, { useState } from "react";
-import  axiosInstance  from "../lib/AxiosComp";
+import {axiosInstance}  from "../lib/axios";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const ForgetPassword = () => {
     setMessage("");
 
     try {
-      const res = await axiosInstance.post("/auth/forget-password", { email });
+      const res = await axiosInstance.post("/auth/forget-password", { email },);
       setMessage(res.data.message || "Reset email sent!");
     } catch (err) {
       setMessage(err.response?.data?.message || "Something went wrong.");

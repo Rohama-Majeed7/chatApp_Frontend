@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axiosInstance from "../lib/AxiosComp";
+import axiosInstance from "../lib/axios";
 import toast from "react-hot-toast";
 
 const ResetForgetPassword = () => {

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import  axiosInstance  from "../lib/AxiosComp";
+import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 const BASE_URL = "https://chat-app-backend-w9hd.vercel.app";
@@ -26,7 +26,11 @@ export const useAuthStore = create((set, get) => ({
   signup: async (data) => {
     set({ isSignIngUp: true });
     try {
-      const res = await axiosInstance.post("/auth/signup", data);
+      const res = await axiosInstance.post("/auth/signup", data, {
+        headers: {
+          Authorization: `Bearer ${get().token}`, // <- replace with your actual token
+        },
+      });
       set({ authUser: res.data });
       set({ token: res.data.token });
       toast.success("Account created successfully");
@@ -40,7 +44,11 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
-      const res = await axiosInstance.post("/auth/login", data);
+      const res = await axiosInstance.post("/auth/login", data,{
+         headers: {
+          Authorization: `Bearer ${get().token}`, // <- replace with your actual token
+        },
+      });
       set({ authUser: res.data });
       set({ token: res.data.token });
       toast.success(res.data.message || "Logged in successfully");
@@ -65,7 +73,11 @@ export const useAuthStore = create((set, get) => ({
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
-      const res = await axiosInstance.put("/auth/update-profile", data);
+      const res = await axiosInstance.put("/auth/update-profile", data,{
+         headers: {
+          Authorization: `Bearer ${get().token}`, // <- replace with your actual token
+        },
+      });
       set({ authUser: res.data });
       toast.success("Profile updated successfully");
     } catch (error) {
