@@ -2,7 +2,7 @@ import { create } from "zustand";
 import  {axiosInstance}  from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-const BASE_URL = "https://chat-app-backend-w9hd.vercel.app";
+const BASE_URL = "https://chat-app-backend-acio.vercel.app";
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSignIngUp: false,
