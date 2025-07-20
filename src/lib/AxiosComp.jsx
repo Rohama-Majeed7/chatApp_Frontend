@@ -16,4 +16,4 @@ const AxiosComp = async () => {
   }
 };
 
-export const axiosInstance = AxiosComp();
+export default  axiosInstance = AxiosComp();
