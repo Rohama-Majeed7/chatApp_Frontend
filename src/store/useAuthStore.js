@@ -44,8 +44,8 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
-      const res = await axiosInstance.post("/auth/login", data,{
-         headers: {
+      const res = await axiosInstance.post("/auth/login", data, {
+        headers: {
           Authorization: `Bearer ${get().token}`, // <- replace with your actual token
         },
       });
@@ -73,8 +73,8 @@ export const useAuthStore = create((set, get) => ({
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
-      const res = await axiosInstance.put("/auth/update-profile", data,{
-         headers: {
+      const res = await axiosInstance.put("/auth/update-profile", data, {
+        headers: {
           Authorization: `Bearer ${get().token}`, // <- replace with your actual token
         },
       });
