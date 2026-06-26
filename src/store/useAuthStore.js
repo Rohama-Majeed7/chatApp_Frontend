@@ -2,7 +2,7 @@ import { create } from "zustand";
 import  {axiosInstance}  from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-const BASE_URL = "https://chat-app-backend-acio.vercel.app";
+const BASE_URL = import.meta.env.VITE_API_URL;
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSignIngUp: false,
@@ -79,7 +79,7 @@ export const useAuthStore = create((set, get) => ({
     if (!authUser || get().socket?.connected) return;
     const socket = io(BASE_URL, {
       query: { userId: authUser._id },
-      transports: ["polling"],
+      transports: ["websocket","polling"],
     });
     socket.connect();
     set({ socket: socket });
